@@ -13,3 +13,4 @@ This is an iOS project using Swift language to build an face detection app
 :chart_with_upwards_trend: | quality settings presset video / photo capture
 :raising_hand: | switch device (front, back)
 :mag_right: | focus mode management
+:bowtie: | Support multi-face detection & tracking
