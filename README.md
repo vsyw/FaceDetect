@@ -1,6 +1,6 @@
 # FaceDetect
 
-This is an iOS project using Swift language to build an face detection app
+This is an iOS project using Swift language to build an real-time face detection app
 ## :fire: Features
 
 
