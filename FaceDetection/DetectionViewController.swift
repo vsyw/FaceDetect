@@ -31,8 +31,11 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(DetectViewController.pinch))
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch))
         view.addGestureRecognizer(pinchGestureRecognizer)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(focusAndExposeTap))
+        view.addGestureRecognizer(tapGestureRecognizer)
         
         setupSession()
         setupPreview()
@@ -44,6 +47,44 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func focusAndExposeTap(gestureRecognizer: UITapGestureRecognizer) {
+        print("focus")
+        let devicePoint = self.previewLayer.captureDevicePointOfInterest(for: gestureRecognizer.location(in: gestureRecognizer.view))
+        focus(with: .autoFocus, exposureMode: .autoExpose, at: devicePoint, monitorSubjectAreaChange: true)
+    }
+    
+    private func focus(with focusMode: AVCaptureFocusMode, exposureMode: AVCaptureExposureMode, at devicePoint: CGPoint, monitorSubjectAreaChange: Bool) {
+        sessionQueue.async { [unowned self] in
+            if let device = self.input.device {
+                do {
+                    try device.lockForConfiguration()
+                    
+                    /*
+                     Setting (focus/exposure)PointOfInterest alone does not initiate a (focus/exposure) operation.
+                     Call set(Focus/Exposure)Mode() to apply the new point of interest.
+                     */
+                    print("device \(device)")
+                    if device.isFocusPointOfInterestSupported && device.isFocusModeSupported(focusMode) {
+                        device.focusPointOfInterest = devicePoint
+                        device.focusMode = focusMode
+                        print("in side ")
+                    }
+                    
+                    if device.isExposurePointOfInterestSupported && device.isExposureModeSupported(exposureMode) {
+                        device.exposurePointOfInterest = devicePoint
+                        device.exposureMode = exposureMode
+                    }
+                    
+                    device.isSubjectAreaChangeMonitoringEnabled = monitorSubjectAreaChange
+                    device.unlockForConfiguration()
+                }
+                catch {
+                    print("Could not lock device for configuration: \(error)")
+                }
+            }
+        }
     }
     
     // Mark: - Setup pinch gesture recognizer
