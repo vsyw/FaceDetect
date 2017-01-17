@@ -25,19 +25,34 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pwq-Bq-Rlb">
                                 <rect key="frame" x="363" y="64" width="43" height="47"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="43" id="cnV-q0-Kt2"/>
+                                    <constraint firstAttribute="width" constant="43" id="Qt0-KX-HMZ"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="camera-switch"/>
                                 <connections>
                                     <action selector="cameraSwitcher:" destination="BYZ-38-t0r" eventType="touchUpInside" id="icm-AZ-bxj"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6x3-cH-ueB">
+                                <rect key="frame" x="167" y="625" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="UtV-t5-QoK"/>
+                                </constraints>
+                                <state key="normal" image="circle"/>
+                                <connections>
+                                    <segue destination="UTi-aV-RFE" kind="show" id="hdZ-0v-sPN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pwq-Bq-Rlb" secondAttribute="bottom" constant="625" id="asI-1p-O70"/>
-                            <constraint firstItem="pwq-Bq-Rlb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="gfx-XO-j94"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="pwq-Bq-Rlb" secondAttribute="trailing" constant="-12" id="oCe-yE-4d3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6x3-cH-ueB" secondAttribute="trailing" constant="147" id="0i2-dc-FcI"/>
+                            <constraint firstItem="6x3-cH-ueB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="561" id="1XJ-5o-N3i"/>
+                            <constraint firstItem="pwq-Bq-Rlb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="8YM-1O-BHf"/>
+                            <constraint firstItem="6x3-cH-ueB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="147" id="Klr-Gs-h2J"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pwq-Bq-Rlb" secondAttribute="bottom" constant="625" id="Sfn-9D-6Iy"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="6x3-cH-ueB" secondAttribute="bottom" constant="31" id="Wx8-eH-0R2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pwq-Bq-Rlb" secondAttribute="trailing" constant="-12" id="kMl-t0-zAQ"/>
+                            <constraint firstItem="6x3-cH-ueB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tS0-Lk-d9I"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="Qmi-DP-hsM"/>
@@ -64,8 +79,27 @@
             </objects>
             <point key="canvasLocation" x="457.97101449275368" y="-153.2608695652174"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="Kb1-4g-0ix">
+            <objects>
+                <viewController id="UTi-aV-RFE" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="98m-jM-wvP"/>
+                        <viewControllerLayoutGuide type="bottom" id="3Bd-89-fyM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tdN-GZ-RJd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J0K-5y-Fun" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2114" y="-153"/>
+        </scene>
     </scenes>
     <resources>
         <image name="camera-switch" width="102" height="102"/>
+        <image name="circle" width="124" height="124"/>
     </resources>
 </document>
