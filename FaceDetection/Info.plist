@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Let this app to use your album</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Let this app to use your camera</string>
 	<key>CFBundleDevelopmentRegion</key>

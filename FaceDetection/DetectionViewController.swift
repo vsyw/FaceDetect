@@ -9,10 +9,11 @@
 import UIKit
 import AVFoundation
 
-class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
+class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate, AVCapturePhotoCaptureDelegate {
     var previewLayer: AVCaptureVideoPreviewLayer!
     var faceRectCALayer: CALayer!
     var isBackCamera = true
+//    var cameraOutput = AVCapturePhotoOutput()
     
     fileprivate var currentCameraFace: AVCaptureDevice?
     fileprivate var sessionQueue: DispatchQueue = DispatchQueue(label: "videoQueue", attributes: [])
@@ -23,6 +24,7 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     fileprivate var cameraDevice: AVCaptureDevice?
     fileprivate var metadataOutput: AVCaptureMetadataOutput!
     fileprivate var input: AVCaptureDeviceInput!
+    fileprivate var cameraOutput = AVCapturePhotoOutput()
     
     @IBAction func cameraSwitcher(_ sender: UIButton) {
         changeInputDevice()
@@ -163,10 +165,12 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
             metadataOutput.setMetadataObjectsDelegate(self, queue: sessionQueue)
             metadataOutput.metadataObjectTypes = [AVMetadataObjectTypeFace]
         }
-        
+
+        if session.canAddOutput(cameraOutput) {
+            session.addOutput(cameraOutput)
+        }
         
     }
-    
     
     func setupPreview(){
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
@@ -177,7 +181,6 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
         view.layer.insertSublayer(previewLayer, at: 0)
         
     }
-    
     
     func startSession() {
         if !session.isRunning{
@@ -300,7 +303,21 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
         return maxFace
     }
     
+    @IBAction func capturePhoto(_ sender: UIButton) {
+        print("capture photo");
+        let settings = AVCapturePhotoSettings()
+        settings.flashMode = .auto
+        settings.isAutoStillImageStabilizationEnabled = true
+        settings.isHighResolutionPhotoEnabled = false
+        self.cameraOutput.capturePhoto(with: settings, delegate: self)
+    }
     
-    
+    func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
+        if let photoSampleBuffer = photoSampleBuffer {
+            let photoData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: photoSampleBuffer, previewPhotoSampleBuffer: previewPhotoSampleBuffer)
+            let image = UIImage(data: photoData!)
+            UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
+        }
+    }
     
 }
