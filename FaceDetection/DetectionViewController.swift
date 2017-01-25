@@ -26,9 +26,13 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     fileprivate var cameraOutput = AVCapturePhotoOutput()
     fileprivate var resultImage = UIImage()
     
-    @IBAction func cameraSwitcher(_ sender: UIButton) {
+    @IBAction func switchCamera(_ sender: Any) {
         changeInputDevice()
     }
+    
+//    @IBAction func cameraSwitcher(_ sender: UIButton) {
+//        changeInputDevice()
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
