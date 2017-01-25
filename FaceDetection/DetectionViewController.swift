@@ -13,7 +13,6 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     var previewLayer: AVCaptureVideoPreviewLayer!
     var faceRectCALayer: CALayer!
     var isBackCamera = true
-//    var cameraOutput = AVCapturePhotoOutput()
     
     fileprivate var currentCameraFace: AVCaptureDevice?
     fileprivate var sessionQueue: DispatchQueue = DispatchQueue(label: "videoQueue", attributes: [])
@@ -25,6 +24,7 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     fileprivate var metadataOutput: AVCaptureMetadataOutput!
     fileprivate var input: AVCaptureDeviceInput!
     fileprivate var cameraOutput = AVCapturePhotoOutput()
+    fileprivate var resultImage = UIImage()
     
     @IBAction func cameraSwitcher(_ sender: UIButton) {
         changeInputDevice()
@@ -306,7 +306,6 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     @IBAction func capturePhoto(_ sender: UIButton) {
         print("capture photo");
         let settings = AVCapturePhotoSettings()
-        settings.flashMode = .auto
         settings.isAutoStillImageStabilizationEnabled = true
         settings.isHighResolutionPhotoEnabled = false
         self.cameraOutput.capturePhoto(with: settings, delegate: self)
@@ -315,9 +314,25 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
         if let photoSampleBuffer = photoSampleBuffer {
             let photoData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: photoSampleBuffer, previewPhotoSampleBuffer: previewPhotoSampleBuffer)
-            let image = UIImage(data: photoData!)
-            UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
+            if let image = UIImage(data: photoData!) {
+                resultImage = image
+                print("image set")
+            }
+            performSegue(withIdentifier: "showSearchResults", sender: self)
+//            UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("prepare for segue")
+        
+        if segue.identifier == "showSearchResults" {
+            if let destinationvc = segue.destination as? SearchResultsViewController {
+                destinationvc.resultImage = self.resultImage
+                destinationvc.testString = "test if it works"
+            }
+        }
+    }
+
     
 }
