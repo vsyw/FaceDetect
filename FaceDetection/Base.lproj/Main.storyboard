@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="p3Z-mD-V7v">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Detect View Controller-->
+        <!--Search-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="DetectViewController" customModule="FaceDetection" customModuleProvider="target" sceneMemberID="viewController">
@@ -23,30 +23,102 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pwq-Bq-Rlb">
-                                <rect key="frame" x="357" y="28" width="44" height="41"/>
+                                <rect key="frame" x="363" y="64" width="43" height="47"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="44" id="8Y3-qg-PJy"/>
+                                    <constraint firstAttribute="width" constant="43" id="Qt0-KX-HMZ"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="camera-switch"/>
                                 <connections>
                                     <action selector="cameraSwitcher:" destination="BYZ-38-t0r" eventType="touchUpInside" id="icm-AZ-bxj"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6x3-cH-ueB">
+                                <rect key="frame" x="167" y="625" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="UtV-t5-QoK"/>
+                                </constraints>
+                                <state key="normal" image="circle"/>
+                                <connections>
+                                    <action selector="capturePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LkZ-g2-3vg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pwq-Bq-Rlb" secondAttribute="bottom" constant="667" id="k8L-dG-aFB"/>
-                            <constraint firstItem="pwq-Bq-Rlb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="kXd-W6-aLA"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="pwq-Bq-Rlb" secondAttribute="trailing" constant="-7" id="xFf-NK-TDA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6x3-cH-ueB" secondAttribute="trailing" constant="147" id="0i2-dc-FcI"/>
+                            <constraint firstItem="6x3-cH-ueB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="561" id="1XJ-5o-N3i"/>
+                            <constraint firstItem="pwq-Bq-Rlb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="8YM-1O-BHf"/>
+                            <constraint firstItem="6x3-cH-ueB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="147" id="Klr-Gs-h2J"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pwq-Bq-Rlb" secondAttribute="bottom" constant="625" id="Sfn-9D-6Iy"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="6x3-cH-ueB" secondAttribute="bottom" constant="31" id="Wx8-eH-0R2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pwq-Bq-Rlb" secondAttribute="trailing" constant="-12" id="kMl-t0-zAQ"/>
+                            <constraint firstItem="6x3-cH-ueB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tS0-Lk-d9I"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Search" id="Qmi-DP-hsM"/>
+                    <connections>
+                        <segue destination="UTi-aV-RFE" kind="show" identifier="showSearchResults" id="9l5-kX-jE9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1365.217391304348" y="-153.2608695652174"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Tma-V2-0L4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="p3Z-mD-V7v" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oaX-G9-Udg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="F2o-kA-zwD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dfa-mx-bCH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="457.97101449275368" y="-153.2608695652174"/>
+        </scene>
+        <!--Results-->
+        <scene sceneID="Kb1-4g-0ix">
+            <objects>
+                <viewController id="UTi-aV-RFE" customClass="SearchResultsViewController" customModule="FaceDetection" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="98m-jM-wvP"/>
+                        <viewControllerLayoutGuide type="bottom" id="3Bd-89-fyM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tdN-GZ-RJd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OP1-kr-w2H">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="OP1-kr-w2H" secondAttribute="trailing" id="DAb-ou-O3M"/>
+                            <constraint firstItem="OP1-kr-w2H" firstAttribute="top" secondItem="98m-jM-wvP" secondAttribute="bottom" id="dM5-Ye-gTI"/>
+                            <constraint firstItem="OP1-kr-w2H" firstAttribute="leading" secondItem="tdN-GZ-RJd" secondAttribute="leading" id="gSf-Wq-dvG"/>
+                            <constraint firstItem="OP1-kr-w2H" firstAttribute="bottom" secondItem="3Bd-89-fyM" secondAttribute="top" id="iH8-0O-YTm"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Results" id="nEI-tS-2BC"/>
+                    <connections>
+                        <outlet property="ResultImageView" destination="OP1-kr-w2H" id="6fz-Dy-3iA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J0K-5y-Fun" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2189.8550724637685" y="-153.2608695652174"/>
         </scene>
     </scenes>
     <resources>
         <image name="camera-switch" width="102" height="102"/>
+        <image name="circle" width="124" height="124"/>
     </resources>
 </document>

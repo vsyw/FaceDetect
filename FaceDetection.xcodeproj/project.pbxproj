@@ -14,6 +14,7 @@
 		7F16097A1E250EF00015169D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F1609781E250EF00015169D /* LaunchScreen.storyboard */; };
 		7F1609851E250EF00015169D /* FaceDetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1609841E250EF00015169D /* FaceDetectionTests.swift */; };
 		7F1609901E250EF00015169D /* FaceDetectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F16098F1E250EF00015169D /* FaceDetectionUITests.swift */; };
+		7FB2BA6E1E2FA42400161BB5 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2BA6D1E2FA42300161BB5 /* SearchResultsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		7F16098B1E250EF00015169D /* FaceDetectionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FaceDetectionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F16098F1E250EF00015169D /* FaceDetectionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionUITests.swift; sourceTree = "<group>"; };
 		7F1609911E250EF00015169D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7FB2BA6D1E2FA42300161BB5 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				7F16099D1E250EFE0015169D /* Supporting Files */,
 				7F1609711E250EF00015169D /* DetectionViewController.swift */,
 				7F1609731E250EF00015169D /* Main.storyboard */,
+				7FB2BA6D1E2FA42300161BB5 /* SearchResultsViewController.swift */,
 			);
 			path = FaceDetection;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F1609721E250EF00015169D /* DetectionViewController.swift in Sources */,
+				7FB2BA6E1E2FA42400161BB5 /* SearchResultsViewController.swift in Sources */,
 				7F1609701E250EF00015169D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,6 +526,7 @@
 				7F1609961E250EF00015169D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7F1609971E250EF00015169D /* Build configuration list for PBXNativeTarget "FaceDetectionTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +535,7 @@
 				7F1609991E250EF00015169D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7F16099A1E250EF00015169D /* Build configuration list for PBXNativeTarget "FaceDetectionUITests" */ = {
 			isa = XCConfigurationList;
@@ -538,6 +544,7 @@
 				7F16099C1E250EF00015169D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
