@@ -30,6 +30,24 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
         changeInputDevice()
     }
     
+    @IBAction func addFace(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(
+            title: "Add A New Face",
+            message: "Please enter the name first of whom you want to add",
+            preferredStyle: UIAlertControllerStyle.alert
+        )
+        alert.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .cancel)
+        )
+        alert.addAction(UIAlertAction(title: "Done", style: .default))
+        alert.addTextField(configurationHandler: {(textFiled) in
+            textFiled.placeholder = "Name or ID"
+        })
+        present(alert, animated: true, completion: nil)
+
+    }
+    
 //    @IBAction func cameraSwitcher(_ sender: UIButton) {
 //        changeInputDevice()
 //    }
