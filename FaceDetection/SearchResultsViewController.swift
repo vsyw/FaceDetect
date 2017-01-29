@@ -10,34 +10,12 @@ import UIKit
 
 class SearchResultsViewController: UIViewController {
     
-    var resultImage: UIImage? {
-        didSet {
-            updateUI()
-            
-        }
-    }
-    
-    fileprivate func updateUI() {
-//        print("did set", resultImage)
-    }
-    
-    var testString = String()
-    
-//    fileprivate func updateUI() {
-//        if ResultImageView != nil {
-//            ResultImageView.image = resultImage
-//        }
-//    }
-    override func awakeFromNib() {
-        print("awake from nib", resultImage == nil)
-    }
+    var resultImage: UIImage?
     
     @IBOutlet weak var ResultImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("in the viewDidLoad \(testString)")
-        print((resultImage == nil))
         ResultImageView.image = resultImage ?? nil
     }
     

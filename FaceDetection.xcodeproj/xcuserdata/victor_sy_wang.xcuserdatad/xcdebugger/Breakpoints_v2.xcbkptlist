@@ -10,13 +10,61 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FaceDetection/DetectionViewController.swift"
-            timestampString = "507224651.610157"
+            timestampString = "507314527.221605"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "352"
-            endingLineNumber = "352"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FaceDetection/DetectionViewController.swift"
+            timestampString = "507313725.724665"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "addFace(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FaceDetection.DetectViewController.addFace (__ObjC.UIBarButtonItem) -&gt; ()"
+                  moduleName = "FaceDetection"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/victor_sy_wang/Developer/FaceDetection/FaceDetection/DetectionViewController.swift"
+                  timestampString = "507226778.785203"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "632">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FaceDetection.DetectViewController.(addFace (__ObjC.UIBarButtonItem) -&gt; ()).(closure #1)"
+                  moduleName = "FaceDetection"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/victor_sy_wang/Developer/FaceDetection/FaceDetection/DetectionViewController.swift"
+                  timestampString = "507226778.787653"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "792">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
