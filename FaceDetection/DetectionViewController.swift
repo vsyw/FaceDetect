@@ -351,10 +351,12 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
             }
             if self.newFaceName.characters.count > 0 {
                 print("fuck")
+                detectFace(self.resultImage, user_id: self.newFaceName, setUserId: setUserID)
+            } else {
+                searchFace(image: self.resultImage)
+                performSegue(withIdentifier: "showSearchResults", sender: self)
+    //            UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
             }
-            detectFace(self.resultImage, completion: setUserID)
-            performSegue(withIdentifier: "showSearchResults", sender: self)
-//            UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
         }
     }
     
@@ -388,12 +390,13 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     private struct Constants {
         static let key = "-UpIe-nO4Zr-AwPjei1eydesDt-7w53c"
         static let secret = "hZzBR3U_-bWelN6qQBDQ-BEMwOvJn_zV"
+        static let faceSet_outer_id = "testSet"
         static let faceApiBaseURL = "https://api-cn.faceplusplus.com/facepp/v3/"
         static let testIMG = "http://img3.cache.netease.com/ent/2012/5/29/201205290821195f1ff.jpg"
         static let testURL = "http://img3.cache.netease.com/ent/2012/5/29/201205290821195f1ff.jpg"
     }
     
-    func detectFace(_ image: UIImage?, completion: @escaping (String) -> Void) {
+    func detectFace(_ image: UIImage?, user_id: String, setUserId: @escaping (String, String, @escaping(String) -> Void) -> Void) {
         //        let img = UIImage(named: "people")
         let img = fixOrientation(image!)
         Alamofire.upload(
@@ -403,7 +406,7 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
                 multipartFormData.append(UIImageJPEGRepresentation(img, 1.0)!, withName: "image_file", fileName: "file.jpeg", mimeType: "image/jpeg")
         },
         to: Constants.faceApiBaseURL + "detect",
-        encodingCompletion: { encodingResult in
+        encodingCompletion: {[unowned self] encodingResult in
             switch encodingResult {
             case .success(let upload, _, _):
                 upload.responseJSON { response in
@@ -411,9 +414,8 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
                     if let value = response.result.value {
                         let result = JSON(value)
                         print("result \(result["faces"][0]["face_token"].string)")
-                        completion(result["faces"][0]["face_token"].string!)
+                        setUserId(result["faces"][0]["face_token"].string!, user_id, self.addFace)
                     }
-//                    let result = response.result.value as? NSDictionary
                 }
             case .failure(let encodingError):
                 print(encodingError)
@@ -421,17 +423,56 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
         })
     }
     
-    func setUserID(_ token: String) {
+    func setUserID(_ token: String, user_id: String, addFace: @escaping (String) -> Void) {
         print("fire set user id api")
         let parameters: Parameters = [
             "api_key": Constants.key,
             "api_secret": Constants.secret,
             "face_token": token,
-            "user_id": "victor"
+            "user_id": user_id
         ]
         Alamofire.request(Constants.faceApiBaseURL + "face/setuserid", method: .post, parameters: parameters).responseJSON { response in
+                switch response.result {
+                case .success:
+                    addFace(token)
+                case .failure(let error):
+                    print(error)
+            }
+            
+        }
+    }
+    
+    func addFace(token: String) {
+        let parameters: Parameters = [
+            "api_key": Constants.key,
+            "api_secret": Constants.secret,
+            "face_tokens": token,
+            "outer_id": Constants.faceSet_outer_id
+        ]
+        Alamofire.request(Constants.faceApiBaseURL + "faceset/addface", method: .post, parameters: parameters).responseJSON { response in
             debugPrint(response)
         }
     }
-
+    
+    func searchFace(image: UIImage) {
+        let img = fixOrientation(image)
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                multipartFormData.append(Constants.key.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "api_key")
+                multipartFormData.append(Constants.secret.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "api_secret")
+                multipartFormData.append(Constants.faceSet_outer_id.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "outer_id")
+                multipartFormData.append(UIImageJPEGRepresentation(img, 1.0)!, withName: "image_file", fileName: "file.jpeg", mimeType: "image/jpeg")
+        },
+            to: Constants.faceApiBaseURL + "search",
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseJSON { response in
+                        debugPrint(response)
+                    }
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+        })
+    }
 }
