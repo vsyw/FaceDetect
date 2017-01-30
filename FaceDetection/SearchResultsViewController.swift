@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import Alamofire
 
 class SearchResultsViewController: UIViewController {
-    
+
     var resultImage: UIImage?
     
     @IBOutlet weak var ResultImageView: UIImageView!

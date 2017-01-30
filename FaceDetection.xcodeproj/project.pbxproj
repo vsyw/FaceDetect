@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C36F2D9EC7FED3F6ACB965E /* Pods_FaceDetection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69C425F47EF7ECE219ACDADD /* Pods_FaceDetection.framework */; };
 		7F1609701E250EF00015169D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F16096F1E250EF00015169D /* AppDelegate.swift */; };
 		7F1609721E250EF00015169D /* DetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1609711E250EF00015169D /* DetectionViewController.swift */; };
 		7F1609751E250EF00015169D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F1609731E250EF00015169D /* Main.storyboard */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		344338A1A6A0CAEF5B212D32 /* Pods-FaceDetection.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceDetection.release.xcconfig"; path = "Pods/Target Support Files/Pods-FaceDetection/Pods-FaceDetection.release.xcconfig"; sourceTree = "<group>"; };
+		69C425F47EF7ECE219ACDADD /* Pods_FaceDetection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FaceDetection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F16096C1E250EF00015169D /* FaceDetection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceDetection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F16096F1E250EF00015169D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F1609711E250EF00015169D /* DetectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionViewController.swift; sourceTree = "<group>"; };
@@ -51,6 +54,7 @@
 		7F1609911E250EF00015169D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F272CC81E3901D4008927DD /* AddFaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFaceViewController.swift; sourceTree = "<group>"; };
 		7FB2BA6D1E2FA42300161BB5 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		8B921B9AF0EB2E4F1C05CA02 /* Pods-FaceDetection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceDetection.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FaceDetection/Pods-FaceDetection.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C36F2D9EC7FED3F6ACB965E /* Pods_FaceDetection.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		20E67FE94A8D328BC0A44139 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				69C425F47EF7ECE219ACDADD /* Pods_FaceDetection.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		737658D75445A4F6218E5C90 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8B921B9AF0EB2E4F1C05CA02 /* Pods-FaceDetection.debug.xcconfig */,
+				344338A1A6A0CAEF5B212D32 /* Pods-FaceDetection.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		7F1609631E250EF00015169D = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +107,8 @@
 				7F1609831E250EF00015169D /* FaceDetectionTests */,
 				7F16098E1E250EF00015169D /* FaceDetectionUITests */,
 				7F16096D1E250EF00015169D /* Products */,
+				737658D75445A4F6218E5C90 /* Pods */,
+				20E67FE94A8D328BC0A44139 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -146,9 +170,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7F1609941E250EF00015169D /* Build configuration list for PBXNativeTarget "FaceDetection" */;
 			buildPhases = (
+				92FE0D51CFB6E96B0109C68B /* [CP] Check Pods Manifest.lock */,
 				7F1609681E250EF00015169D /* Sources */,
 				7F1609691E250EF00015169D /* Frameworks */,
 				7F16096A1E250EF00015169D /* Resources */,
+				C5035DF128469BF97F555FEB /* [CP] Embed Pods Frameworks */,
+				3089F7C0A4F249CA804C38AC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -270,6 +297,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3089F7C0A4F249CA804C38AC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FaceDetection/Pods-FaceDetection-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		92FE0D51CFB6E96B0109C68B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C5035DF128469BF97F555FEB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FaceDetection/Pods-FaceDetection-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7F1609681E250EF00015169D /* Sources */ = {
@@ -429,6 +504,7 @@
 		};
 		7F1609951E250EF00015169D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B921B9AF0EB2E4F1C05CA02 /* Pods-FaceDetection.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = ZU5FQW7WG6;
@@ -442,6 +518,7 @@
 		};
 		7F1609961E250EF00015169D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 344338A1A6A0CAEF5B212D32 /* Pods-FaceDetection.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = ZU5FQW7WG6;

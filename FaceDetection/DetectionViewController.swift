@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+import Alamofire
+import SwiftyJSON
 
 class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate, AVCapturePhotoCaptureDelegate {
     var previewLayer: AVCaptureVideoPreviewLayer!
@@ -283,7 +285,7 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
             }
         }
         
-        print("FACE",faces)
+//        print("FACE",faces)
         
         if faces.count > 0 {
             //            setlayerHidden(false)
@@ -345,8 +347,12 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
         if let photoSampleBuffer = photoSampleBuffer {
             let photoData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: photoSampleBuffer, previewPhotoSampleBuffer: previewPhotoSampleBuffer)
             if let image = UIImage(data: photoData!) {
-                resultImage = image
+                self.resultImage = image
             }
+            if self.newFaceName.characters.count > 0 {
+                print("fuck")
+            }
+            detectFace(self.resultImage, completion: setUserID)
             performSegue(withIdentifier: "showSearchResults", sender: self)
 //            UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
         }
@@ -361,5 +367,71 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
         }
     }
 
+    /* Mark: fix image orientation before encoding */
     
+    func fixOrientation(_ img:UIImage) -> UIImage {
+        
+        if (img.imageOrientation == UIImageOrientation.up) {
+            return img;
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(img.size, false, img.scale);
+        let rect = CGRect(x: 0, y: 0, width: img.size.width, height: img.size.height)
+        img.draw(in: rect)
+        
+        let normalizedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext();
+        return normalizedImage;
+        
+    }
+    
+    private struct Constants {
+        static let key = "-UpIe-nO4Zr-AwPjei1eydesDt-7w53c"
+        static let secret = "hZzBR3U_-bWelN6qQBDQ-BEMwOvJn_zV"
+        static let faceApiBaseURL = "https://api-cn.faceplusplus.com/facepp/v3/"
+        static let testIMG = "http://img3.cache.netease.com/ent/2012/5/29/201205290821195f1ff.jpg"
+        static let testURL = "http://img3.cache.netease.com/ent/2012/5/29/201205290821195f1ff.jpg"
+    }
+    
+    func detectFace(_ image: UIImage?, completion: @escaping (String) -> Void) {
+        //        let img = UIImage(named: "people")
+        let img = fixOrientation(image!)
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                multipartFormData.append(Constants.key.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "api_key")
+                multipartFormData.append(Constants.secret.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "api_secret")
+                multipartFormData.append(UIImageJPEGRepresentation(img, 1.0)!, withName: "image_file", fileName: "file.jpeg", mimeType: "image/jpeg")
+        },
+        to: Constants.faceApiBaseURL + "detect",
+        encodingCompletion: { encodingResult in
+            switch encodingResult {
+            case .success(let upload, _, _):
+                upload.responseJSON { response in
+                    debugPrint(response)
+                    if let value = response.result.value {
+                        let result = JSON(value)
+                        print("result \(result["faces"][0]["face_token"].string)")
+                        completion(result["faces"][0]["face_token"].string!)
+                    }
+//                    let result = response.result.value as? NSDictionary
+                }
+            case .failure(let encodingError):
+                print(encodingError)
+            }
+        })
+    }
+    
+    func setUserID(_ token: String) {
+        print("fire set user id api")
+        let parameters: Parameters = [
+            "api_key": Constants.key,
+            "api_secret": Constants.secret,
+            "face_token": token,
+            "user_id": "victor"
+        ]
+        Alamofire.request(Constants.faceApiBaseURL + "face/setuserid", method: .post, parameters: parameters).responseJSON { response in
+            debugPrint(response)
+        }
+    }
+
 }
