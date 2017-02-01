@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import Alamofire
 import SwiftyJSON
+import PKHUD
 
 class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate, AVCapturePhotoCaptureDelegate {
     var previewLayer: AVCaptureVideoPreviewLayer!
@@ -27,6 +28,7 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     fileprivate var input: AVCaptureDeviceInput!
     fileprivate var cameraOutput = AVCapturePhotoOutput()
     fileprivate var resultImage = UIImage()
+    fileprivate var faceRect = CGRect()
     
     fileprivate var newFaceName = String()
     fileprivate var isToggleAddButton = false
@@ -38,7 +40,7 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     @IBAction func addFace(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(
             title: "Add A New Face",
-            message: "Please enter the name first of whom you want to add",
+            message: "Please enter the name of whom you want to add",
             preferredStyle: UIAlertControllerStyle.alert
         )
         alert.addAction(UIAlertAction(
@@ -75,6 +77,17 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
         setupFace()
         startSession()
         //        print("if its' auto focus", backCameraDevice?.isFocusModeSupported(.continuousAutoFocus) ?? false)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        session.stopRunning()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startSession()
     }
     
     override func didReceiveMemoryWarning() {
@@ -276,12 +289,14 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
         
         var faces = [CGRect]()
-        
+        connection.automaticallyAdjustsVideoMirroring = true
         for metadataObject in metadataObjects as! [AVMetadataObject] {
             if metadataObject.type == AVMetadataObjectTypeFace {
                 let transformedMetadataObject = previewLayer.transformedMetadataObject(for: metadataObject)
-                let face = transformedMetadataObject?.bounds
-                faces.append(face!)
+                faceRect = (transformedMetadataObject?.bounds)!
+
+                print("face bounds", faceRect)
+                faces.append(faceRect)
             }
         }
         
@@ -351,9 +366,9 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
             }
             if self.newFaceName.characters.count > 0 {
                 print("fuck")
+                HUD.show(.progress)
                 detectFace(self.resultImage, user_id: self.newFaceName, setUserId: setUserID)
             } else {
-                searchFace(image: self.resultImage)
                 performSegue(withIdentifier: "showSearchResults", sender: self)
     //            UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
             }
@@ -365,47 +380,21 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
         if segue.identifier == "showSearchResults" {
             if let destinationvc = segue.destination as? SearchResultsViewController {
                 destinationvc.resultImage = self.resultImage
+                destinationvc.resultFaceRect = self.faceRect
             }
         }
-    }
-
-    /* Mark: fix image orientation before encoding */
-    
-    func fixOrientation(_ img:UIImage) -> UIImage {
-        
-        if (img.imageOrientation == UIImageOrientation.up) {
-            return img;
-        }
-        
-        UIGraphicsBeginImageContextWithOptions(img.size, false, img.scale);
-        let rect = CGRect(x: 0, y: 0, width: img.size.width, height: img.size.height)
-        img.draw(in: rect)
-        
-        let normalizedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext();
-        return normalizedImage;
-        
-    }
-    
-    private struct Constants {
-        static let key = "-UpIe-nO4Zr-AwPjei1eydesDt-7w53c"
-        static let secret = "hZzBR3U_-bWelN6qQBDQ-BEMwOvJn_zV"
-        static let faceSet_outer_id = "testSet"
-        static let faceApiBaseURL = "https://api-cn.faceplusplus.com/facepp/v3/"
-        static let testIMG = "http://img3.cache.netease.com/ent/2012/5/29/201205290821195f1ff.jpg"
-        static let testURL = "http://img3.cache.netease.com/ent/2012/5/29/201205290821195f1ff.jpg"
     }
     
     func detectFace(_ image: UIImage?, user_id: String, setUserId: @escaping (String, String, @escaping(String) -> Void) -> Void) {
         //        let img = UIImage(named: "people")
-        let img = fixOrientation(image!)
+        let img = FaceConstants.fixOrientation(image!)
         Alamofire.upload(
             multipartFormData: { multipartFormData in
-                multipartFormData.append(Constants.key.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "api_key")
-                multipartFormData.append(Constants.secret.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "api_secret")
+                multipartFormData.append(FaceConstants.key.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "api_key")
+                multipartFormData.append(FaceConstants.secret.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "api_secret")
                 multipartFormData.append(UIImageJPEGRepresentation(img, 1.0)!, withName: "image_file", fileName: "file.jpeg", mimeType: "image/jpeg")
         },
-        to: Constants.faceApiBaseURL + "detect",
+        to: FaceConstants.faceApiBaseURL + "detect",
         encodingCompletion: {[unowned self] encodingResult in
             switch encodingResult {
             case .success(let upload, _, _):
@@ -426,12 +415,12 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     func setUserID(_ token: String, user_id: String, addFace: @escaping (String) -> Void) {
         print("fire set user id api")
         let parameters: Parameters = [
-            "api_key": Constants.key,
-            "api_secret": Constants.secret,
+            "api_key": FaceConstants.key,
+            "api_secret": FaceConstants.secret,
             "face_token": token,
             "user_id": user_id
         ]
-        Alamofire.request(Constants.faceApiBaseURL + "face/setuserid", method: .post, parameters: parameters).responseJSON { response in
+        Alamofire.request(FaceConstants.faceApiBaseURL + "face/setuserid", method: .post, parameters: parameters).responseJSON { response in
                 switch response.result {
                 case .success:
                     addFace(token)
@@ -444,35 +433,15 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     
     func addFace(token: String) {
         let parameters: Parameters = [
-            "api_key": Constants.key,
-            "api_secret": Constants.secret,
+            "api_key": FaceConstants.key,
+            "api_secret": FaceConstants.secret,
             "face_tokens": token,
-            "outer_id": Constants.faceSet_outer_id
+            "outer_id": FaceConstants.faceSet_outer_id
         ]
-        Alamofire.request(Constants.faceApiBaseURL + "faceset/addface", method: .post, parameters: parameters).responseJSON { response in
+        Alamofire.request(FaceConstants.faceApiBaseURL + "faceset/addface", method: .post, parameters: parameters).responseJSON { response in
+            HUD.flash(.success, delay: 1.0)
             debugPrint(response)
         }
-    }
-    
-    func searchFace(image: UIImage) {
-        let img = fixOrientation(image)
-        Alamofire.upload(
-            multipartFormData: { multipartFormData in
-                multipartFormData.append(Constants.key.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "api_key")
-                multipartFormData.append(Constants.secret.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "api_secret")
-                multipartFormData.append(Constants.faceSet_outer_id.data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "outer_id")
-                multipartFormData.append(UIImageJPEGRepresentation(img, 1.0)!, withName: "image_file", fileName: "file.jpeg", mimeType: "image/jpeg")
-        },
-            to: Constants.faceApiBaseURL + "search",
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .success(let upload, _, _):
-                    upload.responseJSON { response in
-                        debugPrint(response)
-                    }
-                case .failure(let encodingError):
-                    print(encodingError)
-                }
-        })
+        self.newFaceName = ""
     }
 }
