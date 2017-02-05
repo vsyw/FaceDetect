@@ -66,6 +66,10 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+//        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch))
         view.addGestureRecognizer(pinchGestureRecognizer)
@@ -83,6 +87,10 @@ class DetectViewController: UIViewController,AVCaptureMetadataOutputObjectsDeleg
         super.viewDidDisappear(animated)
         session.stopRunning()
         
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     override func viewWillAppear(_ animated: Bool) {

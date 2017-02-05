@@ -6,11 +6,10 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Search-->
+        <!--faceinfo-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="DetectViewController" customModule="FaceDetection" customModuleProvider="target" sceneMemberID="viewController">
@@ -22,11 +21,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6x3-cH-ueB">
-                                <rect key="frame" x="167" y="625" width="80" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="UtV-t5-QoK"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6x3-cH-ueB">
+                                <rect key="frame" x="167" y="636" width="80" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <state key="normal" image="circle"/>
                                 <connections>
                                     <action selector="capturePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LkZ-g2-3vg"/>
@@ -34,28 +31,22 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="6x3-cH-ueB" secondAttribute="trailing" constant="147" id="0i2-dc-FcI"/>
-                            <constraint firstItem="6x3-cH-ueB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="561" id="1XJ-5o-N3i"/>
-                            <constraint firstItem="6x3-cH-ueB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="147" id="Klr-Gs-h2J"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="6x3-cH-ueB" secondAttribute="bottom" constant="31" id="Wx8-eH-0R2"/>
-                            <constraint firstItem="6x3-cH-ueB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tS0-Lk-d9I"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Search" id="Qmi-DP-hsM">
+                    <navigationItem key="navigationItem" title="faceinfo" id="Qmi-DP-hsM">
                         <barButtonItem key="leftBarButtonItem" systemItem="add" id="xx1-6J-6o6">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="addFace:" destination="BYZ-38-t0r" id="CD2-RV-mPA"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="add-Fp-uoD">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="switchCamera:" destination="BYZ-38-t0r" id="nGt-Zf-3vz"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <segue destination="UTi-aV-RFE" kind="show" identifier="showSearchResults" id="9l5-kX-jE9"/>
                     </connections>
@@ -95,7 +86,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OP1-kr-w2H">
-                                <rect key="frame" x="0.0" y="46" width="414" height="690"/>
+                                <rect key="frame" x="0.0" y="26" width="414" height="710"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                         </subviews>

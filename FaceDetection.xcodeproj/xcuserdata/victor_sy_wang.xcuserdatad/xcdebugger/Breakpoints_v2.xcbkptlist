@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FaceDetection/DetectionViewController.swift"
-            timestampString = "507659159.454647"
+            timestampString = "507995506.249925"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "379"
-            endingLineNumber = "379"
+            startingLineNumber = "387"
+            endingLineNumber = "387"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
